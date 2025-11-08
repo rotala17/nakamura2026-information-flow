@@ -14,17 +14,20 @@ function state2α(Y1,Y2)
         α1[i_u] = (sum(Y1 .== unique_set[i_u]) + sum(Y2 .== unique_set[i_u])) / (2N)
         α2[i_u] = sum((Y1 .== unique_set[i_u]) .& (Y2 .== unique_set[i_u])) / N
     end
-    return α1,α2
+    P0_uniform = ones(n_unique_set) ./ n_unique_set
+    return α1,α2,P0_uniform
 end
 
-function stationary_bootstrap(Y,block_size,do_bootstrap)
+function stationary_bootstrap(Y,block_size,do_bootstrap; N=:auto)
     if !do_bootstrap
         return Y
     end
     
-    N = size(Y)[1]
+    if N == :auto
+        N = size(Y)[1]
+    end
     sumL = 0
-    Ybs = zeros(size(Y)[1],size(Y)[2])
+    Ybs = zeros(N,size(Y)[2])
     while sumL < N
         L = rand(Geometric(block_size^(-1)))
         I = sample(1:N)
@@ -45,20 +48,20 @@ I_TA(α1,α2,P0) = SY(α1) - S0(P0) + D(α1,P0) +  1/2 * (sum(α2./P0) - 1)
 I_LB(α1,α2,iy) = SY(α1) - S0([1/2,1/2]) + 2(α2[iy]-α1[iy]) + 1/2
 
 
-function MI_bootstrap(Y,LB_formula,binarize!,do_bootstrap,n_samples,block_size)
+function MI_bootstrap(Y,LB_formula,binarize!,do_bootstrap,n_samples,block_size; N = :auto)
     α1,α2 = state2α(Y[:,1],Y[:,2])
     I_UBs = zeros(n_samples)
     I_LBs = zeros(n_samples)
     for i_sample in 1:n_samples
         #Calculation of upper bound
-        Y_sb = stationary_bootstrap(Y,block_size,do_bootstrap)
-        α1,α2 = state2α(Y_sb[:,1],Y_sb[:,2])
+        Y_sb = stationary_bootstrap(Y,block_size,do_bootstrap,N=N)
+        α1,α2,_ = state2α(Y_sb[:,1],Y_sb[:,2])
         I_UBs[i_sample] = I_UB(α1,α2)
         #Calculation of lower bound
         binarize!(Y_sb)
-        α1,α2 = state2α(Y_sb[:,1],Y_sb[:,2])
+        α1,α2,P0_uniform = state2α(Y_sb[:,1],Y_sb[:,2])
         if LB_formula == :TA
-            I_LBs[i_sample] = I_TA(α1,α2,[1/2,1/2])
+            I_LBs[i_sample] = I_TA(α1,α2,P0_uniform)
         elseif LB_formula ∈ [:LB1,:LB2]
             iy_dict = Dict(:LB1 => 1, :LB2 => 2)
             iy = iy_dict[LB_formula]

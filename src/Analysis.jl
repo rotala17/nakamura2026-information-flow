@@ -10,14 +10,14 @@ function binarize_motor!(Y,pad)
     end
 end
 
-function calc_MI_bootstrap(df,n_samples,block_size,do_bootstrap,formula,pad) 
+function calc_MI_bootstrap(df,n_samples,block_size,do_bootstrap,formula,pad; N=:auto) 
     I_UBs = zeros(n_samples,n_mutants,n_cells)
     I_LBs = zeros(n_samples,n_mutants,n_cells)
     for i_mutant in 1:n_mutants, i_cell in 1:n_cells
         Y1 = df[i_mutant,i_cell,1][:,:state]
         Y2 = df[i_mutant,i_cell,2][:,:state]
         Y = [Y1 Y2]
-        I_UBs[:,i_mutant,i_cell],I_LBs[:,i_mutant,i_cell] = MI_bootstrap(Y,formula,Y->binarize_motor!(Y,pad),do_bootstrap,n_samples,block_size)
+        I_UBs[:,i_mutant,i_cell],I_LBs[:,i_mutant,i_cell] = MI_bootstrap(Y,formula,Y->binarize_motor!(Y,pad),do_bootstrap,n_samples,block_size,N=N)
     end
     return I_UBs,I_LBs
 end
