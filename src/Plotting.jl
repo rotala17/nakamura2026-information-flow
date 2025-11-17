@@ -1,12 +1,12 @@
 
-function plot_MI(MI;only_legend=false)
+function plot_MI(MI;only_legend=false,markerstrokewidth=1.0,linewidth=1.0)
     red = colorant"#FF644E"
     blue = colorant"#00A2FF"
     gray = colorant"#5E5E5E"
     colors = [blue,red]
     markershapes = [:dtriangle,:utriangle]
     label_uplw = ["upper bound: ","lower bound: "]
-    label_mutant = ["RB+","RB\$-\$"]
+    label_mutant = ["RB(\$+\$)","RB(\$-\$)"]
     w = 0.1
     offset = [w,-w]
     offset_mutant = [0,n_cells + 0.5]
@@ -19,7 +19,9 @@ function plot_MI(MI;only_legend=false)
             scatter!([i_cell + offset[i_uplw] + offset_mutant[i_mutant]],[mean(MI[i_uplw][:,i_mutant,i_cell])],
                     yerror = std(MI[i_uplw][:,i_mutant,i_cell]),
                     color = colors[i_mutant], markerstrokecolor=colors[i_mutant],
-                    markershape = markershapes[i_uplw],label=label)
+                    markershape = markershapes[i_uplw],label=label,
+                    markerstrokewidth=markerstrokewidth,
+                    linewidth=linewidth)
         end
     end
     
