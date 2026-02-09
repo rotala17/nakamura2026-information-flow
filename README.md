@@ -1,4 +1,4 @@
-# info-flow-dual-repo
+# nakamura2026-information-flow
 
 This repository contains the code and data used to generate figures for:
 
@@ -24,8 +24,8 @@ All figures can be reproduced by running the corresponding Jupyter notebooks in 
 
 | Figure | Notebook |
 |--------|----------|
-| Figure 1,S3-S6 | `Fig1.ipynb` |
-| Figures 2,S1,S2 | `Fig2.ipynb` |
+| Figure 1,S4-S8 | `Fig1.ipynb` |
+| Figures 2,S2,S3 | `Fig2.ipynb` |
 
 ## Data Generation
 
