@@ -18,6 +18,14 @@ https://doi.org/10.48550/arXiv.2506.15957).
 └── README.md               # This file
 ```
 
+## Experimental Data
+
+The experimental dataset used for the analysis is hosted on Figshare. To integrate the data into this repository:
+1. Download the dataset from Figshare via DOI: https://doi.org/10.6084/m9.figshare.31304680.
+2. Place the download zip file into the 'raw_data/' directory.
+3. Unzip the file within 'raw_data/'.
+   - After extraction, a directory titled 'Data for time traces' should be appear inside 'raw_data/'.
+
 ## Generating Figures
 
 All figures can be reproduced by running the corresponding Jupyter notebooks in the `note/` directory:
