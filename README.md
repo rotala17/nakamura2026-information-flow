@@ -2,8 +2,8 @@
 
 This repository contains the code and data used to generate figures for:
 
-**Nakamura, K., Fukuoka, H., Ishijima, A., Kobayashi, T.J.** "Quantification of Information Flow by Dual Reporter System and Its Application to Bacterial Chemotaxis" (2025) [arXiv:2506.15957](
-https://doi.org/10.48550/arXiv.2506.15957).
+**Nakamura, K., Fukuoka, H., Ishijima, A., Kobayashi, T.J.** "Quantification of Information Flow by Dual Reporter System and Its Application to Bacterial Chemotaxis", Physical Review Letters, 136, 108403 (2026) [link](
+https://doi.org/10.1103/jrph-wj94).
 
 ## Repository Structure
 
@@ -63,5 +63,3 @@ This analysis was performed using:
 - **Julia version**: v1.11.6
 - **Platform**: macOS Sonoma 14.1.2
 - **Hardware**: MacBook Pro 2021 with Apple M1 Max chip, 64 GB memory
-
-*Note: While the code should work on other platforms and Julia versions, results may vary slightly due to numerical precision differences.*
